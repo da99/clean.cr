@@ -160,18 +160,22 @@ module Mu_Clean
 
     def self.escape(s : String) : String
       new_s = unescape(s)
-      HTML.escape(new_s)
+      HTML.escape(new_s).gsub("&#39;", "&#x27;").gsub("/", "&#x2F;")
     end # === def self.escape
 
     def self.escape(i : Int32 | Int64)
       i
     end # === def self.escape
 
+    def self.escape(b : Bool)
+      b
+    end # === def self.escape
+
     def self.escape(a : Array)
       a.map { |v| escape(v) }
     end # === def self.escape
 
-    def self.escape(h : Hash(String, JSON::Type))
+    def self.escape(h : Hash(String | Symbol, JSON::Type))
       h.each do |k, v|
         h[k] = escape(v)
       end
@@ -179,7 +183,7 @@ module Mu_Clean
     end # === def self.escape
 
     def self.escape(u)
-      raise Exception.new("Invalid value ")
+      raise Exception.new("Invalid value: #{u.class}")
       escape(u.to_s)
     end # === def self.escape
 
