@@ -4,8 +4,7 @@ module Mu_Clean
 end # === module Mu_Clean
 
 require "./attr"
-require "./html"
+require "./da_json"
 require "./style"
-require "./uri"
 require "./string"
 
