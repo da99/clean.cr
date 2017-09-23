@@ -1,17 +1,10 @@
 
-require "html"
+require "da_html"
 require "json"
 
 module Mu_Clean
-  def escape_html(*args)
-    HTML_Escape.escape(*args)
-  end # === def escape_html
 
-  def unescape_html(*args)
-    HTML_Escape.unescape(*args)
-  end # === def unescape_html
-
-  module HTML_Escape
+  module DA_JSON
 
     VALID_KEY = /^[a-zA-Z0-9\_\-]{1,20}$/
     DATA_ID_INVALID = /[^a-zA-Z0-9\_\-]+/
@@ -43,7 +36,7 @@ module Mu_Clean
     end # === def self.clean_key
 
     def self.clean_value(s : String)
-      HTML.escape(s)
+      DA_HTML.escape(s)
     end # === def self.clean_value
 
     def self.clean_value(i : Int32 | Int64)
@@ -109,7 +102,7 @@ module Mu_Clean
     end # === def self.get
 
     def self.get(data : String | Int64, i : Int32, keys : Array(String))
-      HTML.escape(data.to_s)
+      DA_HTML.escape(data.to_s)
     end # === def self.get
 
     def self.get(u1, u2, keys : Array(String))
@@ -160,7 +153,7 @@ module Mu_Clean
 
     def self.escape(s : String) : String
       new_s = unescape(s)
-      HTML.escape(new_s).gsub("&#39;", "&#x27;").gsub("/", "&#x2F;")
+      DA_HTML.escape(new_s)
     end # === def self.escape
 
     def self.escape(i : Int32 | Int64)
@@ -201,6 +194,6 @@ module Mu_Clean
       unescape(u.to_s)
     end
 
-  end # === module HTML_Escape
+  end # === module DA_JSON
 end # === module Mu_Clean
 
